@@ -1,0 +1,12 @@
+.column {
+    margin: 8px;
+    border: 1px solid gray
+}
+
+.column-title {
+    padding: 8px;
+}
+
+.task-list {
+    padding: 9px;
+}
