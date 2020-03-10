@@ -1,32 +1,32 @@
 import faker from 'faker';
 
 export const getInitialData = (count: 3) => {
-  const tasks = {};
-  const columns = {};
-  for (let index = 0; index < 4; index++) {
+  const serieses = {};
+  const axises = {};
+  for (let index = 0; index < 7; index++) {
     const taskItem = {
       id: `task-${index}`,
       content: faker.random.word()
     };
-    tasks[`task-${index}`] = taskItem;
+    serieses[`task-${index}`] = taskItem;
   }
 
   for (let index = 0; index < 3; index++) {
-    // const taskIds = Object.keys(tasks);
-    const taskIdsForThisColumn = Object.keys(tasks).splice(index * 3, 3);
-    // console.log(taskIdsForThisColumn);
+    // const seriesesIds = Object.keys(serieses);
+    const seriesesIdsForThisAxis = Object.keys(serieses).splice(index * 1, 1);
+    // console.log(seriesesIdsForThisAxis);
     const columnItem = {
-      id: `column-${index}`,
-      title: `Column-${index}`,
-      taskIds: taskIdsForThisColumn
+      id: `axis-${index}`,
+      title: `Axis-${index}`,
+      seriesesIds: seriesesIdsForThisAxis
     };
-    columns[`column-${index}`] = columnItem;
+    axises[`axis-${index}`] = columnItem;
   }
-  const columnsOrder = Object.keys(columns);
+  const axisesOrder = Object.keys(axises);
 
   return {
-    tasks,
-    columns,
-    columnsOrder
+    serieses,
+    axises,
+    axisesOrder
   };
 };

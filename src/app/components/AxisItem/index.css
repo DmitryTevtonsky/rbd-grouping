@@ -1,4 +1,4 @@
-.column {
+.axis-item {
     margin: 8px;
     border: 1px solid gray;
     min-width: 300px;
@@ -7,11 +7,11 @@
     flex-direction: column;
 }
 
-.column-title {
+.axis-item-title {
     padding: 8px;
 }
 
-.task-list {
+.series-list {
     margin: 8px;
     flex-grow: 1;
     min-height: 100px;
