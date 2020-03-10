@@ -1,6 +1,10 @@
 .column {
     margin: 8px;
-    border: 1px solid gray
+    border: 1px solid gray;
+    min-width: 300px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .column-title {
@@ -8,5 +12,7 @@
 }
 
 .task-list {
-    padding: 9px;
+    margin: 8px;
+    flex-grow: 1;
+    min-height: 100px;
 }
