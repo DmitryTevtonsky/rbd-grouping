@@ -11,8 +11,7 @@ const App = () => {
   const onDragEnd = result => {
     console.log('result', result);
     const { draggableId, destination, source, type } = result;
-    console.log('destination', destination);
-    if (!destination) return; // TODO: creating new axis
+    if (!destination) return;
 
     if (
       destination.droppableId === source.droppableId &&
@@ -22,7 +21,6 @@ const App = () => {
     }
 
     if (type === 'axis') {
-      // to reorder axises
       const newAxisesOrder = Array.from(data.axisesOrder);
       newAxisesOrder.splice(source.index, 1);
       newAxisesOrder.splice(destination.index, 0, draggableId);
@@ -57,7 +55,6 @@ const App = () => {
       const finishSeriesesIds = Array.from(finish.seriesesIds);
       finishSeriesesIds.splice(destination.index, 0, draggableId);
       const newFinishColumn = { ...finish, seriesesIds: finishSeriesesIds };
-
       setData({
         ...data,
         axises: {
@@ -67,7 +64,6 @@ const App = () => {
         }
       });
     }
-    // TODO: filter for empty(without serieses) axis
   };
 
   return (
