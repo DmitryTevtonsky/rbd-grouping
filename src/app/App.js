@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { getInitialData } from './data';
 import AxisItem from './components/AxisItem';
 
@@ -10,13 +10,25 @@ const App = () => {
 
   const onDragEnd = result => {
     console.log('result', result);
-    const { draggableId, destination, source } = result;
-    if (!destination) return;
+    const { draggableId, destination, source, type } = result;
+    console.log('destination', destination);
+    if (!destination) return; // TODO: creating new axis
 
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
+      return;
+    }
+
+    if (type === 'axis') {
+      // to reorder axises
+      const newAxisesOrder = Array.from(data.axisesOrder);
+      newAxisesOrder.splice(source.index, 1);
+      newAxisesOrder.splice(destination.index, 0, draggableId);
+
+      const newData = { ...data, axisesOrder: newAxisesOrder };
+      setData(newData);
       return;
     }
 
@@ -55,24 +67,39 @@ const App = () => {
         }
       });
     }
+    // TODO: filter for empty(without serieses) axis
   };
 
   return (
     <div className="App">
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="container">
-          {data.axisesOrder.map(axisId => {
-            const axis = data.axises[axisId];
-            const serieses = axis.seriesesIds.map(
-              taskId => data.serieses[taskId]
-            );
-            return (
-              <AxisItem key={axisId} axis={axis} serieses={serieses}>
-                {axis.title}
-              </AxisItem>
-            );
-          })}
-        </div>
+        <Droppable droppableId="all-axises" direction="vertical" type="axis">
+          {provided => (
+            <div
+              className="container"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {data.axisesOrder.map((axisId, index) => {
+                const axis = data.axises[axisId];
+                const serieses = axis.seriesesIds.map(
+                  taskId => data.serieses[taskId]
+                );
+                return (
+                  <AxisItem
+                    key={axisId}
+                    axis={axis}
+                    serieses={serieses}
+                    index={index}
+                  >
+                    {axis.title}
+                  </AxisItem>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   );
